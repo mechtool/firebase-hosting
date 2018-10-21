@@ -1,0 +1,17 @@
+<ng-container *ngFor="let zero of menuItems">
+	<a class="sideNav0"  [ngClass]="zero.className" [routerLink]="zero.href" [routerLinkActive]="zero.activeClass">
+		<span class="itemText">{{zero.text}}</span>
+		<mat-icon class="menu-icon"  *ngIf="zero.icon" [svgIcon]="zero.icon" [attr.data-text]="zero.text"></mat-icon>
+	</a>
+	<div class="sideNav0Block" *ngIf="zero.children">
+		<ng-container  *ngFor="let first of zero.children">
+			<div class="sideNav1">{{first.text}}</div>
+			<div class="sideNav2Block" *ngIf="first.children">
+				<ng-container *ngFor="let second of first.children">
+					<div class="sideNav2">{{second.text}}</div>
+				</ng-container>
+			</div>
+		</ng-container>
+	</div>
+</ng-container>
+

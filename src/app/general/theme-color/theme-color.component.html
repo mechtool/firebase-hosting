@@ -1,0 +1,7 @@
+<div class="themeColorContainer" fxLayout="row" *ngIf="visible">
+	<div class="themeColorBlock" *ngFor="let item of themeItems; let inx = index" >
+		<div  matTooltip="{{item.tip}}" class="themeColorItem" [ngClass]="item.className" [style.backgroundColor]="item.backgroundColor" (click)="onClickItem(inx)">
+			<img class="themeColorImg" *ngIf="item.active" [src]="item.src">
+		</div>
+	</div>
+</div>

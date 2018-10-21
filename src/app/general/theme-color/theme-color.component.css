@@ -1,0 +1,27 @@
+.themeColorContainer{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    right: 80px;
+    top: 64px;
+    flex-wrap: wrap;
+    background: white;
+    box-shadow: 0 0 10px 0 #bdbdbd;
+}
+.themeColorBlock{
+    width: 45px;
+    height: 45px;
+    position: relative;
+    margin: 2px;
+}
+.themeColorItem{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.themeColorImg{
+    top: 2px;
+    left: 6px;
+    position: relative;
+}
