@@ -1,1 +1,139 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "assets/normalize.css";
+*/
+@import "../appTheme/theme.css";
+
+@font-face {
+    font-family: 'Oswald-Light';
+    font-style: normal;
+    font-weight: 300;
+    src: url("fonts/Oswald-Light.ttf");
+}
+
+@font-face {
+    font-family: 'RobotoCondensed-Regular';
+    font-style: normal;
+    font-weight: 300;
+    src: url("fonts/RobotoCondensed-Regular.ttf");
+}
+@font-face {
+    font-family: 'RobotoCondensed-Light';
+    font-style: normal;
+    font-weight: 300;
+    src: url("fonts/RobotoCondensed-Light.ttf");
+}
+html{
+    height: 100vh;
+    overflow: hidden;
+}
+body{
+    margin: 0;
+    font-family: Oswald-Light,RobotoCondensed-Regular, Roboto,sans-serif;
+    height: inherit;
+    line-height: 1.4em;
+    color: #3c3c3c;
+    font-size: 18px;
+}
+div.appContainer *[class^=mat], div.appContainer mat-card{
+    font-family: Oswald-Light, RobotoCondensed-Regular, Roboto, sans-serif !important;
+}
+
+.buttonTip{
+    font-size: 14px;
+    font-weight: 300;
+    background-color: rgba(69, 65, 68, 0.7) ;
+}
+
+.mat-sidenav-content > router-outlet + * > mat-card{
+    min-height: 100%;
+    padding: 48px;
+    box-sizing: border-box;
+}
+
+.exampleCode>div#preElem span{/*шрифты в образцах кода*/
+    font-family: Menlo, Monaco, "Courier New", Courier, monospace; /*'Roboto', sans-serif;*/
+    font-weight: 300;
+}
+pre{
+    padding: 20px;
+    margin: 0;
+    font-size: 16px;
+}
+table.mainTable{
+    width: 100%;
+}
+table.mainTable td{
+    padding: 16px !important;
+
+}
+mat-icon{
+    position: relative;
+    top: -2px;
+}
+/*-------------------img container-----------------------*/
+.imgContainer{
+    display: flex;
+    justify-content: center;
+}
+.imgContainer img{
+    width: 80%;
+    height: 80%;
+    max-width: initial;
+    max-height: initial;
+}
+/*-----------------template colors------------------------*/
+*.d-blue, *.blue{
+    color : #0064d5;
+}
+*.d-dark-blue, *.dark-blue{
+    color : #00008d;
+}
+*.d-lite-blue, *.lite-blue{
+    color: #c1dfff;
+}
+*.d-green, *.green{
+    color: #006500;
+}
+*.d-lite-green,*.lite-green{
+    color: #c9ffc7;
+}
+*.d-grey, *.grey{
+    color: #8a8a8a;
+}
+*.d-purple,*.purple{
+    color: purple;
+}
+*.d-lite-purple, *.lite-purple{
+    color: #f2c7ec;
+}
+*.d-sky, *.sky{
+    color: #009a9d;
+}
+*.d-dark-sky, *.dark-sky{
+    color: #007a7c;
+}
+*.d-lite-sky, *.lite-sky{
+    color: #b7f6e2;
+}
+*.d-brown, *.brown{
+    color : #9d3400;
+}
+*.d-lite-brown, *.lite-brown{
+    color: #ffb57c;
+}
+*.d-red, *.red{
+    color: #ff0000;
+}
+*.d-dark-red, *.dark-red{
+    color: #b20000;
+}
+*.d-lite-red, *.lite-red{
+    color: #ff847f;
+}
+*.d-yellow, *.yellow{
+    color: #ffb900;
+}
+*.d-lite-yellow, *.lite-yellow{
+    color: #ffef5c;
+}

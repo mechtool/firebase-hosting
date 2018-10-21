@@ -1,21 +1,32 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="appContainer" [ngClass]="appTheme.theme">
+	<routing-progress></routing-progress>
+	<mat-toolbar class="appToolBar" color="primary" fxLayout="row" fxLayout.lt-sm="column">
+		<mat-toolbar-row class="appToolBarRow" fxFlexOrder="1" fxFlexOrder.lt-sm="2" fxFlex="180px" fxFlex.lt-sm="56px">
+			<div class="buttonBlock" (click)="onClickButtons($event)">
+				<button mat-icon-button *ngFor="let button of toolbarButtons" [routerLink]="button.href" routerLinkActive="activeElement" matTooltip="{{button.tip}}" matTooltipClass="{{button.tipClassName}}" [disabled]="button.disable || false">
+					<mat-icon class="menuIcon" [svgIcon]="button.icon"  [ngClass]="button.className"  ></mat-icon>
+				</button>
+			</div>
+		</mat-toolbar-row>
+		<mat-toolbar-row fxFlexOrder="2" fxFlexOrder.lt-sm="1">
+			<div class="headerText">{{appHeader}}</div>
+			<div class="logoBlock" fxLayout="row">
+				<button class="format-color-button" mat-icon-button matTooltip="Темы" matTooltipClass="buttonTip" (click)="themeComponent.visible = !themeComponent.visible ">
+					<mat-icon svgIcon="format-color" class="format-color"></mat-icon>
+				</button>
+				<a class="logo-pwa" routerLink="/start-page">
+					<img [src]="appTheme.logoSrc">
+				</a>
+				<theme-color #themeComponent (changeTheme)="onChangeThemeColor($event)"></theme-color>
+			</div>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<mat-sidenav-container  [ngStyle.lt-sm]="{height: 'calc(100% - 128px)'}" class="mainSideNav">
+		<mat-sidenav class="matSideDrawer" [opened]="openedSideNav" mode="side">
+			<app-side-nav [menuItems] ="appMenu"></app-side-nav>
+		</mat-sidenav>
+		<mat-sidenav-content #sideNavContent [@routerTransition]="getState(outlet)" >
+			<router-outlet #outlet="outlet"></router-outlet>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>

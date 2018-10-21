@@ -1,0 +1,38 @@
+.appContainer{
+    height: 100%;
+
+}
+mat-toolbar{
+    font-weight: 300;
+    z-index: 10;
+    box-shadow: 0 0 20px 0 #767676;
+    position: relative;
+}
+
+.logoBlock{
+    flex-basis: 100%;
+    justify-content: flex-end;
+    align-items: center;
+}
+.logo-pwa img{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 4px;
+}
+.format-color-button{
+    margin-right: 8px;
+}
+
+mat-sidenav-container {
+    height: calc(100% - 64px);
+}
+.matSideDrawer{
+    width: 270px;
+    height: 100%;
+    direction: rtl;
+}
+div.buttonBlock{
+    top: 1px;
+    position: relative;
+}
