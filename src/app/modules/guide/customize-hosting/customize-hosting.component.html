@@ -1,0 +1,82 @@
+<mat-card  class="pwa-page">
+	<app-local-menu [localMenu]="localMenu"></app-local-menu>
+	<h3 id="setting-behavior" query-selector>Настройка поведения хостинга.</h3>
+	<p>Firebase Hosting имеет дополнительные функции, которые позволяют настроить то, как контент будет размещаться. В этой части описываются настраиваемые страницы ошибок обращения, правила перенаправления и перезаписи, заголовки. </p>
+	<h4 id="404-page" query-selector>Настраиваемая страница 404</h4>
+	<p>Эта страница отправляется клиенту в случаях, когда адрес пытается получить доступ к страницы, которая не существует. Для этого нужно добавить в папку приложения (обычно /dist) html файл с именем <span class="dark-blue">404.html</span>, который будет предаваться браузеру,в случаях отсутствия контента, и возникновения ошибки 404.</p>
+	<h4 id="redirect-rules" query-selector>Правила перенаправления</h4>
+	<p>Используйте URL-перенаправление для предотвращения обращения браузера к битым ссылкам при удалении страницы с сервера или для сокращения URL путей. Когда браузер пытается получить доступ к определенному ресурсу, его настоящее место расположение открывается вместо запрошенного и локация браузера меняется на URL замены. К примеру, можно перенаправить запрос к <span class="green">example.com/team</span> на <span class="green">example.com/about.html</span>. Т.е вместо запрошенного ресурса браузер получает адрес перехода вместе кодом возврата, и уже по ним переходит к указанному месту. Установить настройки перенаправления можно в области <span class="dark-blue">redirects</span>, в секции <span class="dark-blue">hosting</span> в файле <span class="dark-blue">firebase.json</span> </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Пример установки правила перенаправления', extension : 'firebase.json'}">
+<pre>"hosting": &#123;
+<span class="grey">// Добавляем область "redirects" в секцию "hosting"</span>
+   "redirects": [ &#123;
+      "source" : "/foo",
+      "destination" : "/bar",
+      "type" : 301
+   &#125;, &#123;
+      "source" : "/firebase/*",
+      "destination" : "https://firebase.google.com",
+      "type" : 302
+   &#125; ]
+&#125;</pre></app-code-example>
+	<p>Свойство <span class="dark-blue">redirects</span> необязательное, оно содержит массив правил перенапрвления, относящихся к приложению. Каждое правило должно имет свойства <span class="dark-blue">source, destination, type</span>. </p>
+	<ul>
+		<li>Source - параметр, относящийся к типу <a target="_blank" href="https://firebase.google.com/docs/hosting/full-config?authuser=0#section-glob">глобальных шаблонов</a>, который сопоставляется со всеми адресами URL сначала для каждого запроса. Если соответствие найдено, ответ на запрос устанавливает заголовок <span class="dark-blue">Location</span> в значение поля <span class="dark-blue">destination</span>, которым может быть как относительный, так и абсолютный адрес.</li>
+		<li>Type - параметр, определяющий код ответа и может быть как 301 (Удален совсем) или 302 (Найден, но временно перемещен).</li>
+	</ul>
+	<h4 id="rewrite-rules" query-selector>Правила перезаписи.</h4>
+	<p>Используются для отображение одного и того же контента на запрос множества адресов URL. Используется с сопоставлениями по URL шаблонам, когда можно принимать любой URL, который подходит под URL шаблон и позволить клиентскому коду решить что отобразить. К примеру, правила перезаписи можно использовать для поддержки приложения в использовании методов работы с историей браузера <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API#The_pushState().C2.A0method">HTML5 pushState</a> при навигации. Когда браузер пытается открыть определенный URL, ему будет передан контент файла по адресу в свойстве <span class="dark-blue">destination</span>. Для определения правила перезаписи нужно определить область <span class="dark-blue">rewrites</span> в области <span class="dark-blue">hosting</span> в файле <span class="dark-blue">firebase.json</span> </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Пример установки правила перезаписи', extension : 'firebase.json'}">
+<pre>"hosting": &#123;
+<span class="grey">// Добавляем область "redirects" в секцию "hosting"</span>
+    "rewrites": [ &#123;
+       "source": "**",
+       "destination": "/index.html"
+  &#125; ]
+&#125;</pre></app-code-example>
+	<p>Это свойство является необязательным, содержит массив правил перезаписи приложения. Каждое правило должно иметь свойство <span class="dark-blue">source</span> в виде шаблона сравнения и свойство <span class="dark-blue">destination</span>, которое должно существовать в файловой системе и быть файлом. Когда файл или папка не существуют в файловой системе по значению в свойстве <span class="dark-blue">source</span>, к такому запросу применяются правила перезаписи и возвращается контент, находящийся по адресу в свойстве <span class="dark-blue">destination</span>. В примере выше, если любой файл не существует в любой директории, браузеру возврящается стартовая страница. </p>
+	<h4 id="headers" query-selector>Заголовки</h4>
+	<p>В этой части определяются настраиваемые файло-специфические заголовки определяемые в области <span class="dark-blue">headers</span> в файле <span class="dark-blue">firebase.json</span> </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Пример установки заголовков для расширений файлов', extension : 'firebase.json'}">
+<pre>"hosting": &#123;
+   <span class="grey">// Добавить область "headers" в секцию "hosting".</span>
+  "headers": [ &#123;
+    "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+    "headers" : [ &#123;
+      "key" : "Access-Control-Allow-Origin",
+      "value" : "*"
+    &#125; ]
+  &#125;, &#123;
+    "source" : "**/*.@(jpg|jpeg|gif|png)",
+    "headers" : [ &#123;
+      "key" : "Cache-Control",
+      "value" : "max-age=7200"
+    &#125; ]
+  &#125;, &#123;
+   <span class="grey">//Устанавливается заголовок кэша для хранения страницы 404 в течении 5 минут</span>
+    "source" : "404.html",
+      "headers" : [ &#123;
+         "key" : "Cache-Control",
+         "value" : "max-age=300"
+    &#125; ]
+  &#125; ]
+&#125;</pre></app-code-example>
+	<p>Свойство <span class="dark-blue">headers</span> необязательное и содержит массив определений настраиваемых заголовков. Каждое определение должно иметь свойство <span class="dark-blue">source</span>, которое соответствует шаблону или строке пути запроса или правилу перезаписи в <a target="_blank" href="https://firebase.google.com/docs/hosting/full-config?authuser=0#section-glob">глобальной нотации определения шаблонов</a>. Каждое определение должно иметь массив в свойстве <span class="dark-blue">headers</span>, в котором находиться объект со свойствами <span class="dark-blue">key, value</span>.</p>
+	<app-attention [backgroundColor]="'#bbdcff'" [starColor]="'#4799ce'">Примечание. Исключение из правил - адрес файла или папки, которые не могут быть найдены, вместо которых возвращаются сопостовления с 404.html, позволяя специфично нацелится на отображаемые станицы ошибок.</app-attention>
+	<p>Пример выше определяет <a target="_blank" href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a> заголовок для всех шрифтовых файлов и переопределяет одночасовое хранение данных в кэше на двух часовое хранение файлов изображений. В свойстве <span class="dark-blue">headers</span>  не могут быть определены следующие заголовки:</p>
+	<ul>
+		<li>Strict-Transport-Security</li>
+		<li>Public-Key-Pinning</li>
+		<li>Set-Cookie</li>
+	</ul>
+	<h4 id="priorities" query-selector>Правила приоритета хостинга</h4>
+	<p>Различные свойства конфигурации могут, иногда, друг друга переопределять. При возникновении конфликтов ответы от Firebase Hosting определяются в следующем приоритетном порядке:</p>
+	<ol>
+		<li>Резервированные пространства URL имен (/__*) </li>
+		<li>Сконфигурируемые правила перенаправления</li>
+		<li>Точносовпадающий статический контент</li>
+		<li>Сконфигурируемые правила перезаписи</li>
+		<li>Настроенная страница 404.html</li>
+		<li>Дефолтная страница 404.html</li>
+	</ol>
+</mat-card>

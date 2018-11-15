@@ -1,0 +1,49 @@
+<mat-card  class="pwa-page">
+	<app-local-menu [localMenu]="localMenu"></app-local-menu>
+	<h3 id="start" query-selector>Совместное использование ресурсов несколькими приложениями</h3>
+	<p>Можно создать несколько приложений, работающих на Firebase Hosting в пределах одного проекта. Каждый хост такого приложения работает со своим набором контента, имеет собственную конфигурацию, и может иметь один или несколько связанных доменов. Поскольку все приложения расположены в одном проекте, они могут совместно использовать одни и теже общие ресурсы проекта (к примеру, использовать общую базу данных аутентификации пользователей, в то время, как будут иметь собственный домен (домены) и контент).</p>
+	<app-attention [backgroundColor]="'#bbdcff'" [starColor]="'#4799ce'">Примечание. Для использования данной функции необходимо перейти на самый дорогой платный план хостинга (Blaze Plan). Если разработчик переходит с этого плана на более низкий (Flame или Spark ), данная возможность будет отключена, и все присоединенные к общем ресурсам приложения будут разъеденены.</app-attention>
+	<h4 id="update-cli" query-selector>1. Обновить оболочку Firebase CLI</h4>
+	<p>Проверте, что имеете последнюю версию оболочки коммандного интерфейса Firebase CLI, и при необходимости обновите её до последней версии, запустив в терминале операционной системы команду :</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Команда установки / обновления оболочки Firebase CLI', extension : 'cmd'}">
+		<pre><span class="content">> npm install -g firebase-tools</span></pre>
+	</app-code-example>
+	<h4 id="add-app" query-selector>2. Добавить дополнительные приложения</h4>
+	<p>Добавте в область проекта дополнительные приложения (через карточку <span class="dark-red">Добавить проект</span> ), с которыми планируется разделить ресурс. В такое приложение, так же, можно добавить связь с произвольным (собственным, сторонним) доменом, для раздачи стороннего контента и общей конфигурации нескольких URL.</p>
+	<app-attention [backgroundColor]="'#bbdcff'" [starColor]="'#4799ce'">Примечание. Если несколько экземпляров баз данных Firebase Realtime Database были созданы до августа 2018, хостинг автоматически создает сайт для каждой отдельной базы. Если эти сайты не нужны разработчику, их можно спокойно удалить из консоли Firebase, без вреда для экземпляров сопряженных баз данных.</app-attention>
+	<h4>Удаление вторичного сайта</h4>
+	<p>Удалить не желательный сайт можно непосредственно со страницы консоли Firebase. Нельзя удалить сайт по умолчанию, т.е. такой сайт, который имеет совпадающее имя с именем проекта.</p>
+	<app-attention [backgroundColor]="'#ffedc4'" [starColor]="'#ce4f00'" textColor="#A43F00" textMark="&#9888;">Внимание! Удаление сайта - дейтвие неизменное, его невозможно откатить. Firebase не имеет доступ к дисковым записям удаленных файлов и к истории удаления, поэтому имя сайта не может быть повторно активированно.</app-attention>
+	<h4 id="set-up-target" query-selector>3. Настройка целей развертывания для приложений через оболочку Firebase.</h4>
+	<p>Когда имеются несколько сайтов в одном проекте и разработчик запускает в консоли команду развертывания, самой консоли необходим способ взаимодействия с настройками развертывания каждого сайта. Со свойством цели развертывания можно идентифицировать определенный сайт по его <span class="dark-red">target-name</span> (имя цели) в файле конфигурации <span class="dark-blue">firebase.json</span> и в командах консоли Firebase. Для создания цели развертывания и применения имени цели к одному из сайтов, запустите команду ниже из корня проекта: </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Команда установки целевого имени одному из приложений', extension : 'cmd'}">
+		<pre><span class="content">> firebase target:apply hosting <span class="dark-red" >target-name resource-name</span></span></pre>
+	</app-code-example>
+	<p> где, <br> <span class="dark-red">target-name</span> - уникальный идентификтор цели (имя цели), определяется разработчиком для сайта, расположенного на Firebase, <br>
+	<span class="dark-red">resource-name</span> - наименование (имя) сайта на хостинге, которому будет назначен псевдоним цели (имя цели).<br>
+		к примеру, если разработчик создал два сайта с именами на хостинге <span class="dark-blue" >myapp-blog</span> и <span class="dark-blue" >myapp-app</span> в одном Firebase проекте, можно присвоить уникальные имена целей для обоих сайтов (<span class="dark-blue">blog, app</span> соответственно), запустив последовательно команды:</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Команды установки целевого имени двум приложениям', extension : 'cmd'}">
+		<pre><span class="content">> firebase target:apply hosting blog myapp-blog</span>
+<span class="content">> firebase target:apply hosting app myapp-app</span></pre>
+	</app-code-example>
+	<p>Настройки развертывания целей сохраняются в файле <span class="dark-blue">.firebaserc</span> в папке проекта, поэтому имена целей развертывания задаются один раз.</p>
+	<h4 id="define-conf" query-selector>4. Определение конфигурации хостинга для каждого сайта через файл настроек</h4>
+	<p>Используйте имя цели при определении настройки конфигурации хостинга в файле <span class="dark-blue">firebase.json</span>. <br>
+		Для нескольких сайтов определяем:</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Определение настройки для нескольких сайтов', extension : 'cmd'}">
+<pre>&#123;
+   <span class="green" >"hosting"</span>: [ &#123;
+      <span class="green" >"target"</span> : <span class="green" >"blog"</span>, <span class="grey">// "blog" применяется к имени сайта myapp-blog на хостинге. </span>
+      <span class="green" >"public" </span>:  <span class="green" >"blog/dist"</span>
+   &#125;,
+   &#123;
+      <span class="green" >"target" </span>: <span class="green" >"app"</span>, <span class="grey">// "app" применяется к сайту myapp-app на хостинге</span>
+      <span class="green" >"public"</span> : <span class="green" >"app/dist"</span>,
+      <span class="green" >"rewrites" </span> : [...]
+   &#125;
+]&#125;</pre>
+	</app-code-example>
+	<h4 id="deploy-sites" query-selector>5. Развертывание сайта или локальный запуска для отладки</h4>
+	<p>Следующие команды запускаются из корневой папки проекта</p>
+	<app-information-table [tableData]="tableData0" firstCol="400px"></app-information-table>
+</mat-card>

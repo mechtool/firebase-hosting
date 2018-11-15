@@ -1,0 +1,98 @@
+<mat-card  class="pwa-page">
+	<app-local-menu [localMenu]="localMenu"></app-local-menu>
+	<h3 id="serve-dynamic-content" query-selector>Обслуживание динамического контента облачными функциями.</h3>
+	<p>Firebase Hosting позволяет использовать функционал <a target="_blank" href="https://firebase.google.com/docs/functions/?authuser=0">облачных функций</a> для выполнения серверной обработки. Это значит, что возможна поддержка динамической генерации контента сайта, хостируемого на Firebase. В этой части кратко объясняется как это выполнить:
+	</p>
+	<ul>
+		<li><span class="dark-blue" >Отдача динамического контента</span>. Вместо раздачи статического контента, можно выполнять серверную логику через функции, возвращая динамически сгенерированное содержание. К примеру, обратившись к  по адресу <span class="dark-red">/blog/id-for-blog-post</span>, который указывает на функцию, написанную разработчиком и расположенную на сервере, которая, после использования идентификатора в последнем блоке адреса для получения данных из произвольной базы данных (к примеру, Firebase Realtime Database), возвращает результат своей работы динамически. </li>
+		<li><span class="dark-blue">Визуализация (вставка данных в шаблон) одностраничных приложений (SPA) для совершенствования опримизации SEO</span>. Позволяет создавать динамические теги <span class="dark-red">meta</span> для указания поисковым движкам социальных сетей. </li>
+		<li><span class="dark-blue">Обеспечивает легковесность приложений</span>. Можно создавать програмные интерфейсы через облачные функции для реализации в приложениях на Firebase Hosting для ассинхронного получения контента. Это позволяет снизить превоначальное время загрузки приложения в браузер, сохраняя клиентский код легким, ассинхронно загружая контент через функции. </li>
+	</ul>
+	<h3 >>Соединение облачных функций с Firebase Hosting </h3>
+	<p>Для того, что бы облачная функция работала вместе с приложением, расположенным на Firebase Hosting, необходимо настройти облачные функции (Cloud Functions), написать собственную функцию, заполнить правила перезаписи, и развернуь эту функцию на сервере. Для увеличения производительности динамического контента, по желанию, можно настроить <a target="_blank" href="https://firebase.google.com/docs/hosting/functions?authuser=0#manage_cache_behavior">настройки кэширования</a>.</p>
+	<h4 id="set-up-cloud-functions" query-selector>Настройка облачных функций для Firebase Hosting</h4>
+	<p>Для настройки облачных функций для проекта нужно установить последнюю версию Firebase CLI, что требует версии установленного пакета NodeJs не менее v.6.3.1 или более. Пройдя по ссылки можно установить последнюю сборку <a target="_blank" href="https://nodejs.org/en/">NodeJs</a>, а устанавливая её, устанавливается и пакетный менеджер npm. Чтобы проверить успешную установку последней сборки NodeJs, в терминале запустите команду:</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Проверка версии установленного пакета NodeJs', extension : 'cmd'}">
+		<pre><span class="content">> node --version</span></pre>
+	</app-code-example>
+	<p>Для установки последней версии оболочки Firebase CLI, в терминале операционной системы запустите команду:</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Загрузка / обновление оболочки Firebase CLI', extension : 'cmd'}">
+		<pre><span class="content">> npm install -g firebase-tools</span></pre></app-code-example>
+	<p>Далее необходима инициализация облачных функций. Если для папки проекта на машине разработчика не производилась инициализация проекта для Firebase Hosting, запустите первую команду из корневой папки проекта. При отображении интерактивных подсказок в течении данной процедуры, выберите пунк инициализации облачных функций для данного проекта. Если текущий проект уже был инициализирован как проект Firebase Hosting, запустите вторую команду в корневой области проекта для инициализации только функций.</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Команды инициализаций облачных функций', extension : 'cmd'}">
+		<pre><span class="content">> firebase init</span>
+<span class="content">> firebase init functions</span></pre></app-code-example>
+	<h4 id="create-cloud-functions" query-selector>Создание HTTP функции для сайта на хостинге.</h4>
+	<p>После удачной инициализации облачных функций для папки проекта, откройте файл  <span class="dark-blue">/functions/index.js</span> редактором кода и замените его содержимое следующим кодом. Этот код создаст HTTP функцию с имененм <span class="dark-red">bigben</span> </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'HTTP функция bigben', extension : '/functions/index.js'}">
+		<pre>const functions = require(<span class="green">'firebase-functions'</span>);
+exports.bigben = functions.https.onRequest((<span class="dark-red" >req, res</span>) => &#123;
+   const hours = (new <span class="purple" >Date()</span>.getHours() % 12) + 1 <span class="grey">// Лондонское время по UTS + 1  час; </span>
+   <span class="dark-red" >res</span>.status(200).send(<span class="green" >`&#60;!doctype html&#62;
+      &#60;head&#62;
+         &#60;title&#62;Time&#60;/title&#62;
+      &#60;/head&#62;
+      &#60;body&#62;
+         $&#123;'BONG '.repeat(hours)&#125;
+      &#60;/body&#62;
+   &#60;/html&#62;`</span>);
+&#125;);</pre></app-code-example>
+	<h4 id="direct-hosting-request" query-selector>Перенаправление запроса хостинга на функцию</h4>
+	<p>Правилами перезаписи можно направлять специфичные шаблоны адресов в один адрес назначения. К примеру, чтобы напрвить все запросы хостинга по пути <span class="green">'/bigben'</span> на функцию <span class="dark-red">bigben</span>, нужно открыть файл конфигурации <span class="dark-blue">firebase.json</span> и добавить несколько строк в область <span class="dark-blue">rewrites</span> d ctrwbb <span class="dark-blue">hosting</span> :</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Настройка правил перезаписи адреса', extension : '/functions/index.js'}">
+		<pre>&#123;
+"hosting": &#123;
+   "public": "public",
+   <span class="grey">// Добавляем сюда, следующий отрывок кода</span>
+   <span class="dark-red" >"rewrites": [ &#123;
+      "source": "/bigben", "function": "bigben"
+      &#125; ]</span>
+   &#125;
+&#125;</pre></app-code-example> <br>
+	<app-attention [backgroundColor]="'#bbdcff'" [starColor]="'#4799ce'">Примечание. Firebase Hosting является объектом 60 - ти секундного тайаута запроса. Т.е. если ваша функция затратила больше 60 секунд работы, она вылетит по таймауту, даже, если сконфигурировать таймаут функции более 60 сукунд, и браузер получит ответ со статусом <span class="dark-red">504</span> (вылет функции по таймауту). Для поддержки подобного рода динамического контента используйте <a target="_blank" href="https://cloud.google.com/appengine/docs/flexible/?authuser=0">гибкую среду приложений</a>. Перейдите по ссылке для более тесного знакомства с <a target="_blank" href="https://firebase.google.com/docs/hosting/url-redirects-rewrites?authuser=0#section-rewrites">правилами перезаписи</a>, а так же можно познакомиться с <a target="_blank" href="https://firebase.google.com/docs/hosting/url-redirects-rewrites?authuser=0#section-priorities">приоритетным порядком ответов</a> для различных конфигураций хостинга.  </app-attention>
+	<h4 id="run-dynamic-content" query-selector>Запуск динамического контента локально.</h4>
+	<p>Запустить локально HTTP функции можно при помощи Firebase CLI. Это позволяет оценить и проверить Firebase проект до развертывания его в производство. Для успешного использования функционала нужно убедиться в установке двух библиотек <span class="dark-blue">firebase-tools, firebase-functions</span> последних сборок или обновить их до последнего релиза. Для этого нужно в терминале операционной системы перейти в папку <span class="dark-blue">functions/</span> и запустить две команды: </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Обновление  необходимых библиотек', extension : 'cmd'}">
+		<pre><span> > npm install --save firebase-functions@latest  </span>
+<span> > npm install -g firebase-tools  </span></pre></app-code-example>
+	<p>Для сборки и запуска проекта локально, запускается команда ниже, предварительно перейдя в терминале в корневую папку проекта. Она будет эмулировать хостинг и работу функций по локально развернутым адресам.  </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Сборка и запуск проекта локально', extension : 'cmd'}">
+		<pre><span> > firebase serve </span></pre></app-code-example>
+	<p>Когда используются облачные функции для генерации динамического контента, эта команда, по умолчанию, использует локальные HTTP функции в качестве прокси для хостинга. Для подробного ознакомления со свойствами конфигурации хостинга и облачных функций, зайдите на <a target="_blank" href="https://firebase.google.com/docs/cli/?authuser=0#serve_and_test_your_firebase_project_locally">Firebase CLI References</a>.<br> Если нужно использовать переменные конфигурации, то нужно, перед запуском команды выше, запустить команду установки данных переменных, предварительно терминалом перейдя в папку <span class="dark-blue">functions</span>. </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Инициализация переменных конфигурации', extension : 'cmd'}">
+		<pre><span> > firebase functions:config:get > .runtimeconfig.json</span></pre></app-code-example>
+	<h4 id="deploy-functions" query-selector>Развертывание</h4>
+	<p>После создания функции и настройки правил перезаписи адресов, разверните проект Firebase, запустив команду в терминале, перейдя терминалом в папку проекта:</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Развертывание проекта приложения', extension : 'cmd'}">
+		<pre><span> > firebase deploy</span></pre></app-code-example>
+	<p>После развертывания функция, в терминал возвратится адрес функции по которому она станет доступна для вызова. Его можно ввести в строку адреса браузера, весь трафик к Firebase Hosting, который будет соответствовать пути, определенному в правилах перезаписи адресов будет передан на вызов соответствующей функции.</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Образец адреса развернутой функции', extension : 'cmd'}">
+		<pre><span> > https://us-central1-<span class="dark-red">имя_проекта</span>.cloudfunctions.net/bigben</span></pre></app-code-example>
+	<h4 id="using-cookies" query-selector>Использование куки</h4>
+	<p>При использовании Firebase Hosting вместе с облачными функциями, куки отделяются от входящих запросов. Это необходимо для более эффективного поведения кэширования на стороне CDN. Только специально именованные куки (<span class="dark-red">__session</span> ) разрешены для передачи в исполнение облачной функции. Если они примутствуют, они становятся частью кэшевого ключа. означающего, что два пользователя с разными куками получают одинаковый кэшированный ответ. Следует использовать только куки <span class="dark-red">__session</span>, если функция обслуживает различный контент, в зависимости от авторизации пользователей. </p>
+	<h3 id="manage-cache" query-selector>Управление поведением кэша</h3>
+	<p>Firebase Hosting использует мощную систему доставки контента (CDN), дела приложение очень быстрым. Статический контент Firebase Hosting кэшируется до тех пор, пока разработчик не развернется новой версией приложения. Из-за того, что функции могут генерировать динамический контент, запросы, которые обрабатываются функциями не кэшируются в глобальной CDN по умолчанию. Это поведение можно сконфигурировать, тем самым ускоряя приложение и снижая ресурс, требующийся для выполнения функции.</p>
+	<h4 id="set-cache-control" query-selector>Настройтть заголовок Cache-Control</h4>
+	<p>Основной инструмент, который используется для управление кэшем - заголовок Cache-Control. Настраивая его, разработчик коммуницирует и с браузером, и с CDN задавая длительность хранения контента. В теле функции установка этого заголовка происходит следующим образом: </p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Установка заголовка контроля продолжительности кэширования контента', extension : 'index.js'}">
+		<pre>res.set(<span class="green" >'Cache-Control', 'public, max-age=300, s-maxage=600'</span>);</pre></app-code-example>
+	<p>Установка заголовка запускает следующие настройки:</p>
+	<ul>
+		<li>Помечает кэш как открытый. Это означает, что  такой контент кэшируется промежуточными серверами (к примеру, CDN). По умолчанию этот заголовок установлен как <span class="dark-blue">private</span> (закрытый), означающий, что только браузеру можно кэшировать такой контент. В этом свойстве устанавливается наибольшее количество времени, после которого контент будет считаться устаревшим. Если страница кэшируется в диапазоне нескольких секунд, это свойство следует устанавливать в наименьшее значение. Различные типы контента могут сохраняться в кэше часами, днями иил месяцами.</li>
+		<li>Сообщает браузеру сколько секунд он может кэшировать данный контент в свойстве <span class="dark-blue">max-age</span>. В примере ниже, браузеру предписано хранить контент не более 5 минут. </li>
+		<li>В свойстве <span class="dark-blue">s-maxage</span> сообщается CDN сколько секунд она может хранить контент. В примере выше - 5 минут.</li>
+	</ul>
+	<p>Более подробно о заголовке <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">Cache-Control</a></p>
+	<h4 id="when-cached-go" query-selector>Когда отдается кэшированный контент.</h4>
+	<p>Если заголовок <span class="dark-blue">Cache-Control</span> установлен как открытый, контент кэшируется на основе:</p>
+	<ul>
+		<li>Имя хоста (hostname)</li>
+		<li>Путь (path)</li>
+		<li>Строка запроса (область запроса  в url)</li>
+		<li>Содержимого заголовка Vary</li>
+	</ul>
+	<p>Заголовок <span class="dark-blue">Vary</span> указывает на то, какие части запроса особенно важны в формулировании ответа. В основном, это не особенно беспокоит разработчиков, поскольку Firebase Hosting автоматически устанавливает данный заголовок для ответов в различных ситуациях, включая установку сессионных куки и заголовков авторизации в качестве ключей кэша (имен свойств). В некоторых особенных случаях, можно устанавливать иные заголовки, влияющие на кэш, по необходимости. К примеру, ручная установка этого заголовка в ответе на запрос, с такой настройкой два одинаковых запроса с различным значением в заголовках <span class="dark-blue">X-My-Custom-Header</span> кэшируются отдельно :</p>
+	<app-code-example [context]="{headerColor : 'rgb(229, 229, 229)', backgroundColor : 'rgb(242, 242, 242)',headerText : 'Пример установки заголовков', extension : 'index.js'}">
+		<pre>res.set(<span class="green" >'Vary', 'Accept-Encoding, X-My-Custom-Header'</span>);</pre></app-code-example><br>
+	<app-attention [backgroundColor]="'#bbdcff'" [starColor]="'#4799ce'">Примечание. Не злоупотребляйте установкой заголовка Vary. Чем больше вы всего установите, тем более ограничена будет CDN. Так же следует помнить, что заголовок Vary полагается не на заголовки ответа, а на заголовки запроса. </app-attention>
+</mat-card>

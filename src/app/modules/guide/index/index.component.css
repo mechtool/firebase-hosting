@@ -1,0 +1,10 @@
+:host /deep/ table div.stepPoint{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ebf9fc;
+    text-align: center;
+    line-height: 60px;
+    margin-right: 10px;
+}
