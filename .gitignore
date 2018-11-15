@@ -39,3 +39,10 @@ testem.log
 Thumbs.db
 /node_modules/
 /functions/
+/.firebase/
+/.idea/
+/.settings/
+/.vscode/
+/e2e/
+/functions/node_modules/
+/.gitignore

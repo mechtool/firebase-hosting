@@ -5,23 +5,29 @@
 @import "../appTheme/theme.css";
 
 @font-face {
+    font-family: 'Shrikhand';
+    font-style: normal;
+    src: url("assets/fonts/Shrikhand-Regular.ttf");
+}
+
+@font-face {
     font-family: 'Oswald-Light';
     font-style: normal;
     font-weight: 300;
-    src: url("fonts/Oswald-Light.ttf");
+    src: url("assets/fonts/Oswald-Light.ttf");
 }
 
 @font-face {
     font-family: 'RobotoCondensed-Regular';
     font-style: normal;
     font-weight: 300;
-    src: url("fonts/RobotoCondensed-Regular.ttf");
+    src: url("assets/fonts/RobotoCondensed-Regular.ttf");
 }
 @font-face {
     font-family: 'RobotoCondensed-Light';
     font-style: normal;
     font-weight: 300;
-    src: url("fonts/RobotoCondensed-Light.ttf");
+    src: url("assets/fonts/RobotoCondensed-Light.ttf");
 }
 html{
     height: 100vh;
@@ -29,7 +35,7 @@ html{
 }
 body{
     margin: 0;
-    font-family: Oswald-Light,RobotoCondensed-Regular, Roboto,sans-serif;
+    font-family: Oswald-Light, RobotoCondensed-Regular, Roboto, sans-serif;
     height: inherit;
     line-height: 1.4em;
     color: #3c3c3c;
@@ -44,21 +50,25 @@ div.appContainer *[class^=mat], div.appContainer mat-card{
     font-weight: 300;
     background-color: rgba(69, 65, 68, 0.7) ;
 }
+.activeRoute{
+    background: #e2e1de;
+}
 
 .mat-sidenav-content > router-outlet + * > mat-card{
     min-height: 100%;
-    padding: 48px;
+    padding: 36px;
     box-sizing: border-box;
 }
 
-.exampleCode>div#preElem span{/*шрифты в образцах кода*/
-    font-family: Menlo, Monaco, "Courier New", Courier, monospace; /*'Roboto', sans-serif;*/
-    font-weight: 300;
-}
-pre{
+
+app-code-example pre{
     padding: 20px;
     margin: 0;
     font-size: 16px;
+    font-weight: 300;
+    color: #000091;
+    font-family: monospace, Oswald-Light , "Helvetica Neue", sans-serif;
+
 }
 table.mainTable{
     width: 100%;
@@ -70,6 +80,10 @@ table.mainTable td{
 mat-icon{
     position: relative;
     top: -2px;
+}
+/*-------------------------------------------------------*/
+app-local-menu{
+    float: right;
 }
 /*-------------------img container-----------------------*/
 .imgContainer{

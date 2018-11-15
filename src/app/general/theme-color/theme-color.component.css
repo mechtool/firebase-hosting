@@ -7,6 +7,7 @@
     flex-wrap: wrap;
     background: white;
     box-shadow: 0 0 10px 0 #bdbdbd;
+    display: flex;
 }
 .themeColorBlock{
     width: 45px;
@@ -21,7 +22,7 @@
     cursor: pointer;
 }
 .themeColorImg{
-    top: 2px;
+    top: 3px;
     left: 6px;
     position: relative;
 }

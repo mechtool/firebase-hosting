@@ -12,57 +12,29 @@ import {routerTransition} from './general/animations/animations';
     styleUrls : ['./app.component.css', './app.component.css'],
     animations : [routerTransition],
     changeDetection : ChangeDetectionStrategy.OnPush  // явная стратегия фиксации изменений
-    
-    
 })
 export class AppComponent {
     
     public appHeader = 'FireBase Hosting.ru';
-    public localData : any;
-    public appMenu : SideNavItem[];
     public appTheme = {theme: 'second-theme', logoSrc: '../assets/icons/app-shell/firebase_logo.png'};
     public openedSideNav = true;
+    
     public toolbarButtons = [
-        {className : 'menuButton', icon : 'menu', tip : 'Видимость меню', tipClassName : 'buttonTip'},
-        {className : 'listButton', icon : 'list', tip : 'Переключение меню', tipClassName : 'buttonTip', disable : true},
-        {className : 'guidesButton', icon : 'filter', tip : 'Руководства', tipClassName : 'buttonTip', href : '/guides'},
-        {className : 'sampleButton', icon : 'layers', tip : 'Примеры', tipClassName : 'buttonTip', href : '/samples'},
+        {className : 'menuButton', icon : 'menu', tip : 'Меню', tipClassName : 'buttonTip'}
     ] ;
     
-    public menuItems : SideNavItem[] = this.appMenu = [
-        new SideNavItem({text : 'Руководства', href : '/guides', className :'zero', icon :'remove', activeClass : 'activeRoute', children :[
-                new SideNavItem({text : 'Манифест', href :'/guides/manifest', className : 'first', activeClass : 'activeRoute'}),
-                new SideNavItem({text : "Оболочка приложения", href :  '/guides/app-shell', activeClass : 'activeRoute',  className : 'first'}),
-                new SideNavItem({text : "Техника Offline", href : '/guides/offline-cookbook', activeClass : 'activeRoute',  className :'first'}),
-                new SideNavItem({text : "Сервисный рабочий", href : '/guides/service-worker', icon :'remove', activeClass : 'activeRoute', className : 'first', children : [
-                        new SideNavItem({text : 'Обзор', href : '/guides/service-worker/overview', activeClass : 'activeRoute',  className : 'second'}),
-                        new SideNavItem({text : 'Жизненный цикл', href : '/guides/service-worker/life-cycle', activeClass : 'activeRoute',  className : 'second'}),
-                        new SideNavItem({text : 'Регистрация', href : '/guides/service-worker/registration', activeClass : 'activeRoute',  className : 'second'}),
-                        new SideNavItem({text : 'Производительность', href : '/guides/service-worker/performance', activeClass : 'activeRoute',  className : 'second'}),
-                        new SideNavItem({text : 'Ускорение навигации', href : '/guides/service-worker/speed-up', activeClass : 'activeRoute',  className : 'second'}),
-                    ]}),
-                new SideNavItem({text : "Входящие оповещения", href : '/guides/push-notification', activeClass : 'activeRoute', className : 'first', icon : 'remove', children : [
-                        new SideNavItem({text : 'Введение', href : '/guides/push-notification/introduction', activeClass : 'activeRoute', className : 'second'}),
-                        new SideNavItem({text : 'Последовательность Push', href : '/guides/push-notification/principle-operation',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Подписка пользователя', href : '/guides/push-notification/subscribing-user',activeClass : 'activeRoute',  className : 'second'}),
-                        new SideNavItem({text : 'Пользовательские разрешения', href :'/guides/push-notification/permission-ux',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Использование библиотеки', href :'/guides/push-notification/push-libraries',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Протокол Web Push', href :'/guides/push-notification/push-protocol',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Обработка событий', href :'/guides/push-notification/push-events',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Поведение оповещения', href :'/guides/push-notification/notification-behavior',activeClass : 'activeRoute',  className :'second'}),
-                        new SideNavItem({text : 'Общие шаблоны', href :'/guides/push-notification/common-patterns',activeClass : 'activeRoute',  className :'second'}),
-                    ]}),
-                new SideNavItem({text : 'Установка на устройство',href : '/guides/install-prompt', activeClass : 'activeRoute', className : 'first', icon : 'remove',  children : [
-                        new SideNavItem({text : 'Диалоги установки', href : '/guides/install-prompt/install-messages', activeClass : 'activeRoute', className : 'second'}),
-                        new SideNavItem({text : 'Иконки и цвета', href : '/guides/install-prompt/icons-colors', activeClass : 'activeRoute',  className :'second'}),
-                    ]})
-            ]}) ,
-        new SideNavItem({text : 'Примеры', href : '/samples', activeClass : 'activeRoute', className : 'first', icon : 'remove', children : [
-                new SideNavItem({text : 'Прогноз погоды', href : '/samples/forecast', activeClass : 'activeRoute', className : 'second'}),
-            ]}),
-    ];
+    public appMenu : SideNavItem[] =  [
+
+                new SideNavItem({text : 'Введение', href :'/guide/index', className : 'first', activeClass : 'activeRoute'}),
+                new SideNavItem({text : "Начало работы", href :  '/guide/get-started', activeClass : 'activeRoute',  className : 'first'}),
+                new SideNavItem({text : "Разделение ресурсов", href :  '/guide/share-resources', activeClass : 'activeRoute',  className : 'first'}),
+                new SideNavItem({text : "Работа со сторонним доменом", href :  '/guide/connect-domain', activeClass : 'activeRoute',  className : 'first'}),
+                new SideNavItem({text : "Соединение с облачными функциями", href :  '/guide/connect-functions', activeClass : 'activeRoute',  className : 'first'}),
+                new SideNavItem({text : "Настройка поведения хостинга", href :  '/guide/customize-hosting', activeClass : 'activeRoute',  className : 'first'}),
+                new SideNavItem({text : "Зарезервированные адреса", href :  '/guide/reserved-urls', activeClass : 'activeRoute',  className : 'first'}),
+            ]
     
-    public logoSource = {'first-theme' : '../assets/icons/app-shell/pwa-yellow.png', 'second-theme' : '../assets/icons/app-shell/pwa-blue.png', 'third-theme' : '../assets/icons/app-shell/pwa-green.png', 'forth-theme': '../assets/icons/app-shell/pwa-blue2.png'};
+    public logoSource = {'first-theme' : '../assets/icons/app-shell/firebase_logo.png', 'second-theme' : '..//assets/icons/app-shell/firebase_logo.png', 'third-theme' : '../assets/icons/app-shell/firebase_logo.png', 'forth-theme': '..//assets/icons/app-shell/firebase_logo.png'};
     
     private icons = [ //иконки для регистрации в реестре material
         {name : 'logo-pwa', link : 'assets/icons/app-shell/pwa-blue.svg'},
@@ -73,7 +45,9 @@ export class AppComponent {
         {name : 'filter', link : 'assets/icons/app-shell/filter_none-24px.svg'},
         {name : 'format-color', link : 'assets/icons/app-shell/format_color_fill-24px.svg'},
         {name : 'list', link : 'assets/icons/app-shell/list-24px.svg'},
-        {name : 'attention', link : 'assets/icons/attention/error_outline-24px.svg'}
+        {name : 'attention', link : 'assets/icons/attention/error_outline-24px.svg'},
+        {name : 'openLocal', link : 'assets/icons/app-shell/baseline-add_circle_outline-24px.svg'},
+        {name : 'closeLocal', link : 'assets/icons/app-shell/baseline-remove_circle_outline-24px.svg'},
     ] ;
     
     constructor(private overlayContainer: OverlayContainer,
@@ -89,18 +63,13 @@ export class AppComponent {
         this.communication.communicateObservable.subscribe(resource => {
             if(resource.type == 'resource'){
                 this.appHeader = resource.appHeader;
-                this.toolbarButtons[1].disable = !resource.localData;
-                if(resource.localData){
-                    this.localData = resource.localData;
-                }else {
-                    this.appMenu = this.menuItems;
-                }
             }
             this.changeDetector.detectChanges();
         })
     }
+    
     getState(outlet) {
-        return outlet.activatedRouteData.type;
+        return outlet.activatedRouteData['type'];
     }
     
     onChangeThemeColor(theme){
@@ -112,11 +81,27 @@ export class AppComponent {
         if(this.getTarget(target, 'menuButton')){ //нажата кнопка отображения меню
             this.openedSideNav = !this.openedSideNav;
         }
-        else if(this.getTarget(target, 'listButton')){ //нажата кнопка вывода локального меню страницы
-            this.appMenu = this.appMenu === this.menuItems ? this.localData.localMenu : this.menuItems;
-            this.changeDetector.detectChanges();
+    }
+    
+    public onClickAppMenu(item){
+        item.childrenVisible = !item.childrenVisible;
+        item.icon && (item.icon = item.childrenVisible ? 'sort' : 'remove');
+        item.children && (item.children.forEach(ch => {
+            closeChildren(ch);
+        })) ;
+        this.changeDetector.detectChanges();
+        
+        function closeChildren(item) {
+            item.children && (item.children.forEach(ch => {
+                closeChildren(ch);
+            })) ;
+            if(item.childrenVisible){
+                item.childrenVisible = false ;
+                item.icon = 'remove';
+            }
         }
     }
+    
     private getTarget(base, selector){
         if(base.classList.contains(selector)) return base;
         else if(base.classList.contains('buttonBlock')) return null;

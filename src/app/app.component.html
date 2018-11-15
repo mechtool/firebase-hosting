@@ -1,20 +1,20 @@
 <div class="appContainer" [ngClass]="appTheme.theme">
 	<routing-progress></routing-progress>
 	<mat-toolbar class="appToolBar" color="primary" fxLayout="row" fxLayout.lt-sm="column">
-		<mat-toolbar-row class="appToolBarRow" fxFlexOrder="1" fxFlexOrder.lt-sm="2" fxFlex="180px" fxFlex.lt-sm="56px">
+		<mat-toolbar-row style="padding-right : 0;" class="appToolBarRow" fxFlexOrder="1" fxFlexOrder.lt-sm="2" fxFlex.lt-sm="56px">
 			<div class="buttonBlock" (click)="onClickButtons($event)">
-				<button mat-icon-button *ngFor="let button of toolbarButtons" [routerLink]="button.href" routerLinkActive="activeElement" matTooltip="{{button.tip}}" matTooltipClass="{{button.tipClassName}}" [disabled]="button.disable || false">
+				<button mat-icon-button *ngFor="let button of toolbarButtons" routerLinkActive="activeElement" matTooltip="{{button.tip}}" matTooltipClass="{{button.tipClassName}}">
 					<mat-icon class="menuIcon" [svgIcon]="button.icon"  [ngClass]="button.className"  ></mat-icon>
 				</button>
 			</div>
 		</mat-toolbar-row>
-		<mat-toolbar-row fxFlexOrder="2" fxFlexOrder.lt-sm="1">
+		<mat-toolbar-row style="padding-left: 0;"  fxFlexOrder="2" fxFlexOrder.lt-sm="1">
 			<div class="headerText">{{appHeader}}</div>
 			<div class="logoBlock" fxLayout="row">
 				<button class="format-color-button" mat-icon-button matTooltip="Темы" matTooltipClass="buttonTip" (click)="themeComponent.visible = !themeComponent.visible ">
 					<mat-icon svgIcon="format-color" class="format-color"></mat-icon>
 				</button>
-				<a class="logo-pwa" routerLink="/start-page">
+				<a class="logo-pwa" target="_blank" href="https://firebase.google.com/docs/hosting/?authuser=0">
 					<img [src]="appTheme.logoSrc">
 				</a>
 				<theme-color #themeComponent (changeTheme)="onChangeThemeColor($event)"></theme-color>
@@ -23,7 +23,7 @@
 	</mat-toolbar>
 	<mat-sidenav-container  [ngStyle.lt-sm]="{height: 'calc(100% - 128px)'}" class="mainSideNav">
 		<mat-sidenav class="matSideDrawer" [opened]="openedSideNav" mode="side">
-			<app-side-nav [menuItems] ="appMenu"></app-side-nav>
+			<app-side-nav [menuItems] ="appMenu" (onClickAppMenu)="onClickAppMenu($event)"></app-side-nav>
 		</mat-sidenav>
 		<mat-sidenav-content #sideNavContent [@routerTransition]="getState(outlet)" >
 			<router-outlet #outlet="outlet"></router-outlet>

@@ -1,4 +1,4 @@
-import {trigger, animate, style, group, animateChild, query, stagger, transition} from '@angular/animations';
+import {trigger, animate, style, group, animateChild, state, query, stagger, transition} from '@angular/animations';
 
 export const routerTransition = trigger('routerTransition', [
     transition('* <=> *', [
@@ -16,4 +16,33 @@ export const routerTransition = trigger('routerTransition', [
                     ], { optional: true })
         ])
     ])
+]) ;
+export const menuItemTransition = trigger('menuItemTransition', [
+    transition('*<=>*', [
+        query(':enter',
+            [
+                style({ opacity: 0, transform: 'translateY(-15px)' }),
+                stagger('20ms',
+                    animate('20ms ease-out', style({ opacity: 1, transform: 'translateY(0px)' })
+                    )
+                )
+            ],
+            { optional: true }
+        ),
+        query(':leave',             [
+            style({ opacity: 1, transform: 'translateY(0px)' }),
+            stagger('20ms',
+                animate('20ms ease-out', style({ opacity: 0, transform: 'translateY(-15px)' }))
+            )
+        ],{
+            optional: true
+        })
+    ])
+]);
+export const openCloseLocalMenu = trigger('openCloseLocalMenu', [
+    state('open', style({width : '250px'})),
+    state('close', style({width : '0px'})),
+    transition('*<=> open', animate('300ms')),
+    transition('*<=> close', animate('300ms')),
+
 ]) ;

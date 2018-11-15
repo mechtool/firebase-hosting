@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "server",
+    "outDir": "",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

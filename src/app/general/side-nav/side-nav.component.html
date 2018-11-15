@@ -1,17 +1,41 @@
-<ng-container *ngFor="let zero of menuItems">
+<div *ngFor="let zero of menuItems" [@menuItemTransition]="animationState" >
+	<a class="sideNav0"  [ngClass]="zero.className" [routerLink]="zero.href" [routerLinkActive]="zero.activeClass" fragment="{{zero.fragment}}" (click)="onClickItemsMenu(zero)">
+		<span class="itemText">{{zero.text}}</span>
+		<mat-icon class="menu-icon"  *ngIf="zero.children" [svgIcon]="zero.icon" [attr.data-text]="zero.text"></mat-icon>
+	</a>
+	<ng-container  *ngFor="let first of zero.children">
+		<a *ngIf="zero.childrenVisible" class="sideNav1" [ngClass]="first.className" [routerLink]="first.href" [routerLinkActive]="first.activeClass" fragment="{{first.fragment}}" (click)="onClickItemsMenu(first)">
+			<span class="itemText">{{first.text}}</span>
+			<mat-icon class="menu-icon"  *ngIf="first.children" [svgIcon]="first.icon" [attr.data-text]="first.text"></mat-icon>
+		</a>
+		<ng-container *ngFor="let second of first.children">
+			<a *ngIf="first.childrenVisible" class="sideNav2" [ngClass]="second.className" [routerLink]="second.href" [routerLinkActive]="second.activeClass" fragment="{{second.fragment}}" (click)="onClickItemsMenu(second)">
+				<span class="itemText">{{second.text}}</span>
+				<mat-icon class="menu-icon"  *ngIf="second.children" [svgIcon]="second.icon" [attr.data-text]="second.text"></mat-icon>
+			</a>
+		</ng-container>
+	</ng-container>
+</div>
+<!--<ng-container *ngFor="let zero of menuItems">
 	<a class="sideNav0"  [ngClass]="zero.className" [routerLink]="zero.href" [routerLinkActive]="zero.activeClass">
 		<span class="itemText">{{zero.text}}</span>
 		<mat-icon class="menu-icon"  *ngIf="zero.icon" [svgIcon]="zero.icon" [attr.data-text]="zero.text"></mat-icon>
 	</a>
 	<div class="sideNav0Block" *ngIf="zero.children">
 		<ng-container  *ngFor="let first of zero.children">
-			<div class="sideNav1">{{first.text}}</div>
+			<a class="sideNav1" [ngClass]="first.className" [routerLink]="first.href" [routerLinkActive]="first.activeClass">
+				<span class="itemText">{{first.text}}</span>
+				<mat-icon class="menu-icon"  *ngIf="first.icon" [svgIcon]="first.icon" [attr.data-text]="first.text"></mat-icon>
+			</a>
 			<div class="sideNav2Block" *ngIf="first.children">
 				<ng-container *ngFor="let second of first.children">
-					<div class="sideNav2">{{second.text}}</div>
+					<a class="sideNav2" [ngClass]="second.className" [routerLink]="second.href" [routerLinkActive]="second.activeClass">
+						<span class="itemText">{{second.text}}</span>
+						<mat-icon class="menu-icon"  *ngIf="second.icon" [svgIcon]="second.icon" [attr.data-text]="second.text"></mat-icon>
+					</a>
 				</ng-container>
 			</div>
 		</ng-container>
 	</div>
-</ng-container>
+</ng-container>-->
 

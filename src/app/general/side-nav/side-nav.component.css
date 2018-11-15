@@ -1,0 +1,38 @@
+a{
+    display: block;
+    direction: initial;
+    height: 42px;
+    text-decoration: none;
+    border: 1px solid #e7e7e7;
+    line-height: 38px;
+    margin: 1px;
+    position: relative;
+}
+a:hover{
+    background: #f0f0f0;
+}
+.itemText{
+    position: relative;
+}
+mat-icon{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+}
+
+a.zero .itemText{
+   left: 10px;
+}
+a.first{
+    border-right: 2px solid mediumvioletred;
+}
+a.first .itemText{
+    left: 30px;
+}
+a.second{
+    border-right: 2px solid #eacb00;
+}
+a.second .itemText{
+    left: 50px;
+
+}

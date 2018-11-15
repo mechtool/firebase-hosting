@@ -16,10 +16,10 @@ enableProdMode();
 const app = express();
 
 const PORT = process.env.PORT || 4000;
-const DIST_FOLDER = join(process.cwd(), 'dist');
+const DIST_FOLDER = join(process.cwd(), '/dist');
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./firebase-hosting-server/main');
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('../functions/dist-universal/main');
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
@@ -30,13 +30,13 @@ app.engine('html', ngExpressEngine({
 }));
 
 app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, '/firebase-hosting'));
+app.set('views', DIST_FOLDER);
 
 // Example Express Rest API endpoints
 // app.get('/api/**', (req, res) => { });
 
 // Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, '/firebase-hosting'), {
+app.get('*.*', express.static(DIST_FOLDER, {
     maxAge: '1y'
 }));
 

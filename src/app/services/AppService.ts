@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable, QueryList} from '@angular/core';
 import {Subject} from 'rxjs';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router, RouterEvent} from '@angular/router';
+import {QuerySelectorDirective} from '../general/query-selector/query-selector.directive';
 
 @Injectable()
 export class CommunicationService{//сервис для передачи списка элементов навигации, соответствуюего определенному
@@ -20,6 +22,7 @@ export class SideNavItem {
     public icon? : string;
     public children? : SideNavItem[];
     public fragment? : string;
+    public childrenVisible? : boolean;
     
     constructor(param){
         this.text = param.text;
@@ -28,6 +31,27 @@ export class SideNavItem {
         this.activeClass = param.activeClass || '';
         this.icon = param.icon || '';
         this.children = param.children;
-        this.fragment = param.fragment;
+        this.fragment = param.fragment || '';
+        this.childrenVisible = param.childrenVisible || false;
+    }
+}
+export class RowData{
+    constructor(public data : any[]){
+    }
+}
+
+@Injectable()
+export class ScrollRouterService {
+    constructor(private router : Router, private  activatedRoute: ActivatedRoute){}
+    
+    subscribeChangeRoute(that){
+        return this.activatedRoute.fragment.subscribe((fr : string) => {
+            if(fr) {
+                that.appAnchors.forEach(elem =>{
+                    if(fr === elem.nativeElement.id){elem.nativeElement.scrollIntoView({ behavior: 'smooth' , block : 'start'})}
+                })
+            }
+        })
+        
     }
 }

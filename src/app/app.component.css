@@ -1,6 +1,5 @@
 .appContainer{
     height: 100%;
-
 }
 mat-toolbar{
     font-weight: 300;
@@ -15,8 +14,7 @@ mat-toolbar{
     align-items: center;
 }
 .logo-pwa img{
-    width: 50px;
-    height: 50px;
+    width: 80px;
     position: relative;
     top: 4px;
 }
@@ -27,12 +25,21 @@ mat-toolbar{
 mat-sidenav-container {
     height: calc(100% - 64px);
 }
+mat-sidenav-content{
+    scroll-behavior: smooth;
+}
 .matSideDrawer{
-    width: 270px;
+    width: 300px;
     height: 100%;
     direction: rtl;
 }
 div.buttonBlock{
     top: 1px;
     position: relative;
+}
+.headerText,.textFirebase{
+    font-size: 22px;
+}
+.headerText{
+    margin-left: 24px;
 }
