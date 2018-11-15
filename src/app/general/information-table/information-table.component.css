@@ -1,0 +1,13 @@
+tr{
+    height: 80px;
+}
+td{
+    padding: 16px;
+}
+.firstCol{
+    background: rgba(209, 222, 255, 0.75);
+    font-style: italic;
+}
+.secondCol{
+    background: rgba(159, 210, 0, 0.18);
+}

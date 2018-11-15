@@ -1,0 +1,8 @@
+<button mat-mini-fab matTooltip="Содержание" matTooltipClass="buttonTip" class="buttonContainer" (click)="onClickButton()"  [disabled]="localMenuDisabled">
+	<mat-icon class="local-menu"  >{{iconName}}</mat-icon>
+</button>
+<div class="menuContainer" [@openCloseLocalMenu]="animateIndex">
+	<h4>Содержание:</h4>
+	<app-side-nav [menuItems]="localMenu"></app-side-nav>
+</div>
+

@@ -1,0 +1,7 @@
+<table>
+	<colgroup class="firstCol" [style.width]="firstCol"></colgroup>
+	<colgroup class="secondCol"></colgroup>
+	<tr *ngFor="let row of tableData">
+		<td *ngFor="let data of row.data" [innerHtml]="sanitizer.bypassSecurityTrustHtml(data)"></td>
+	</tr>
+</table>
