@@ -15,7 +15,7 @@ import {routerTransition} from './general/animations/animations';
 })
 export class AppComponent {
     
-    public appHeader = 'FireBase Hosting.ru';
+    public appHeader = '';
     public appTheme = {theme: 'second-theme', logoSrc: '../assets/icons/app-shell/firebase_logo.png'};
     public openedSideNav = true;
     
@@ -32,7 +32,7 @@ export class AppComponent {
                 new SideNavItem({text : "Соединение с облачными функциями", href :  '/guide/connect-functions', activeClass : 'activeRoute',  className : 'first'}),
                 new SideNavItem({text : "Настройка поведения хостинга", href :  '/guide/customize-hosting', activeClass : 'activeRoute',  className : 'first'}),
                 new SideNavItem({text : "Зарезервированные адреса", href :  '/guide/reserved-urls', activeClass : 'activeRoute',  className : 'first'}),
-            ]
+            ];
     
     public logoSource = {'first-theme' : '../assets/icons/app-shell/firebase_logo.png', 'second-theme' : '..//assets/icons/app-shell/firebase_logo.png', 'third-theme' : '../assets/icons/app-shell/firebase_logo.png', 'forth-theme': '..//assets/icons/app-shell/firebase_logo.png'};
     
@@ -46,8 +46,8 @@ export class AppComponent {
         {name : 'format-color', link : 'assets/icons/app-shell/format_color_fill-24px.svg'},
         {name : 'list', link : 'assets/icons/app-shell/list-24px.svg'},
         {name : 'attention', link : 'assets/icons/attention/error_outline-24px.svg'},
-        {name : 'openLocal', link : 'assets/icons/app-shell/baseline-add_circle_outline-24px.svg'},
-        {name : 'closeLocal', link : 'assets/icons/app-shell/baseline-remove_circle_outline-24px.svg'},
+        {name : 'git-logo', link : 'assets/icons/app-shell/github-circle-white-transparent.svg'},
+
     ] ;
     
     constructor(private overlayContainer: OverlayContainer,
