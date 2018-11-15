@@ -37,10 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/node_modules/
 /.firebase/
-/.idea/
-/.settings/
 /.vscode/
 /e2e/
 /functions/node_modules/

@@ -1,27 +1,6 @@
 # FirebaseHosting
+Сайт перевода руководства [Firebase Hosting](https://firebase.google.com/docs/hosting/?authuser=0) на русский язык.<br>
+Проект сгенерирован [Angular CLI](https://github.com/angular/angular-cli) version 6.2.5. с настройками Angular-Universal, что подразумевает под собой часть universal, который хостируется не на сервере NodeJs (к примеру, на [heroku](https://www.heroku.com)), а на Firebase с функциональностью облачных функций, для раздачи именно Universal приложения с платформы Firebase, что собственно и отрабатывалось данным проектом. Сам проект на продакшн (папка /dist), оптимизирован и аглифицирован штатным средством Angular CLI - webpack. Темы изменяются на основе стандартного подхода изменения палитр [Angular-Material](https://material.angular.io/guide/theming) 
+### Development server
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.5.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+После загрузки зависимостей, запустить `ng serve` для старта компановки и запуска сервера разработки на `http://localhost:4200/`, затем перейти браузером туда же. 
